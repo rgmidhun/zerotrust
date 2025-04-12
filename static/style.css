@@ -1,0 +1,29 @@
+body {
+    background-color: #0f0f0f;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    padding: 30px;
+}
+
+h1 {
+    color: #00ff88;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    background: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #00ff88;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #00ff88;
+    border: none;
+    padding: 10px 20px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}

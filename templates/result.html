@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ZeroTrust Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>ZeroTrust Result</h1>
+
+    <p><strong>Scanned:</strong><br>{{ message }}</p>
+
+    <p><strong>Analysis:</strong><br>{{ result }}</p>
+
+    <h2>Risk Meter</h2>
+<div style="width: 100%; background-color: #333; border-radius: 5px;">
+  <div style="width: {{ risk_score * 10 }}%; background-color:
+    {% if risk_score < 4 %}
+      #00ff88
+    {% elif risk_score < 7 %}
+      #ffc107
+    {% else %}
+      #ff4d4d
+    {% endif %};
+    height: 25px; border-radius: 5px;">
+  </div>
+</div>
+<p><strong>Score:</strong> {{ risk_score }}/10</p>
+
+    <p><strong>Score:</strong> {{ risk_score }}/10</p>
+
+    <br>
+    <a href="/">🔁 Scan Another Message</a> | <a href="/scan-link">🔗 Scan a Link</a>
+</body>
+</html>
