@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - ZeroTrust</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-box {
+            background-color: #1e1e1e;
+            padding: 40px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0 0 15px rgba(0, 255, 195, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #00ffc3;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #2a2a2a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00ffc3;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .login-link a {
+            color: #00ffc3;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <h2>📝 Register Account</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Create Username" required>
+            <input type="password" name="password" placeholder="Create Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-link">
+            Already registered? <a href="/login">Login here</a>
+        </div>
+    </div>
+</body>
+</html>

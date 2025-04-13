@@ -1,13 +1,110 @@
+
 <!DOCTYPE html>
 <html>
-<head><title>ZeroTrust Scanner</title>
-<p><a href="/scan-link">Scan a suspicious link 🔗</a></p>
+<head>
+    <title>ZeroTrust - Family Shield</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+        h1 {
+            color: #00ffc3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background-color: #1e1e1e;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 10px;
+        }
+        button, input[type="submit"] {
+            padding: 12px 20px;
+            background-color: #00ffc3;
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        li {
+            margin: 5px 0;
+            background-color: #1f1f1f;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+        hr {
+            border: 1px solid #333;
+            margin: 30px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+        }
+        .logout {
+            color: #ff6b6b;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-  <h1>ZeroTrust: Scam Text Detector</h1>
-  <form action="/scan" method="post">
-    <textarea name="message" rows="6" cols="60" placeholder="Paste suspicious message here..."></textarea><br>
-    <input type="submit" value="Analyze">
-  </form>
+    <h1>
+        🛡️ ZeroTrust Scam Detector
+        <a class="logout" href="/logout">🔓 Logout</a>
+    </h1>
+
+    <form method="POST" action="/">
+        <input type="email" name="email" placeholder="Enter family email" required>
+        <button type="submit">Add Email</button>
+    </form>
+
+    <h3>📬 Alert List:</h3>
+    <ul>
+      {% for email in emails %}
+        <li>{{ email }} 
+            <a href="{{ url_for('remove_email', email=email) }}">🗑️ Remove</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <hr>
+
+    <form method="POST" action="/analyze">
+        <label>Paste suspicious message or link:</label><br><br>
+        <textarea name="user_input" rows="6" placeholder="Paste message or link here..."></textarea><br>
+        <input type="submit" value="Analyze">
+    </form>
+
+    <hr>
+
+    <a href="/history" style="color: #00ffc3; font-weight: bold; text-decoration: none;">
+        🧾 View Scan History
+    </a>
+
+    <footer>
+        🐼 Powered by ZeroTrust AI | Protecting You & Your Family
+    </footer>
 </body>
 </html>
