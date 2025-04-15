@@ -8,17 +8,18 @@ import csv
 import os
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallbacksecret")
 
-co = cohere.Client("your-cohere-api-key")  # Replace
+# Load secrets from environment
+co = cohere.Client(os.getenv("hcMMMoNhUG6TygWQf5kTOHeuEbOxtrCWE0pUw0kp"))
+EMAIL_ADDRESS = os.getenv("blackvolk23@gmail.com")
+EMAIL_PASSWORD = os.getenv("slws fcdi zyul rxwu")
 
-EMAIL_ADDRESS = "yourgmail@gmail.com"
-EMAIL_PASSWORD = "your-app-password"
 LOG_FILE = "scam_log.csv"
 USER_FILE = "users.csv"
 family_emails = []
 
-# Email alert
+# Send alert email to saved family contacts
 def send_alert_email(to_emails, scanned_text, ai_result):
     msg = EmailMessage()
     msg['Subject'] = "🚨 ZeroTrust Scam Alert"
@@ -36,11 +37,14 @@ Your family member scanned a suspicious message:
 🛡️ Stay safe,
 ZeroTrust AI Shield
 """)
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        smtp.send_message(msg)
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.send_message(msg)
+    except Exception as e:
+        print(f"[!] Failed to send alert email: {str(e)}")
 
-# Log scan
+# Log scan results
 def log_scan(message, result, risk_level):
     file_exists = os.path.exists(LOG_FILE)
     with open(LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
@@ -49,7 +53,7 @@ def log_scan(message, result, risk_level):
             writer.writerow(["Timestamp", "Message", "AI_Result", "Risk_Level"])
         writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message, result, risk_level])
 
-# Check user credentials
+# Check login credentials
 def check_user(username, password):
     if os.path.exists(USER_FILE):
         with open(USER_FILE, newline='', encoding='utf-8') as f:
@@ -61,16 +65,13 @@ def check_user(username, password):
 
 # Register new user
 def register_user(username, password):
-    if not os.path.exists(USER_FILE):
-        with open(USER_FILE, mode='w', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow([username, password])
-    else:
-        with open(USER_FILE, mode='a', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow([username, password])
+    mode = 'a' if os.path.exists(USER_FILE) else 'w'
+    with open(USER_FILE, mode=mode, newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow([username, password])
 
-# Login
+# Routes
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -83,7 +84,6 @@ def login():
             return render_template('login.html', error="Invalid credentials")
     return render_template('login.html')
 
-# Register
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
